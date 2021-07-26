@@ -32,3 +32,4 @@ jobs:
           git add -A
           git diff-index --quiet HEAD || git commit -m 'Optimized Images'
           git push
+          
