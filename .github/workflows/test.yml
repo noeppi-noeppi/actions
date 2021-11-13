@@ -20,7 +20,7 @@ jobs:
       - name: 'Copy Files'
         shell: bash
         run: |
-          if [[ ${{ github.ref }} != "" ]]: then
+          if [[ "${{ github.ref }}" != "" ]]; then
             rm -rf deploy/${{ github.ref }}
             mkdir -p deploy/${{ github.ref }}
             cp base/*.gradle deploy/${{ github.ref }}
