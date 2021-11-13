@@ -22,9 +22,9 @@ jobs:
         run: |
           BRANCH=$(echo ${GITHUB_REF#refs/heads/})
           if [[ "${BRANCH}" != "" && "${BRANCH}" != *"/"* ]]; then
-            rm -rf deploy/${{ github.ref }}
-            mkdir -p deploy/${{ github.ref }}
-            cp base/*.gradle deploy/${{ github.ref }}
+            rm -rf deploy/${BRANCH}
+            mkdir -p deploy/${BRANCH}
+            cp base/*.gradle deploy/${BRANCH}
           fi
 
       - name: 'Push'
