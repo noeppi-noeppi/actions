@@ -18,10 +18,13 @@ jobs:
           path: deploy
 
       - name: 'Copy Files'
+        shell: bash
         run: |
-          rm -rf deploy/${{ github.head_ref }}
-          mkdir -p deploy/${{ github.head_ref }}
-          cp base/*.gradle deploy/${{ github.head_ref }}
+          if [[ ${{ github.ref }} != "" ]]: then
+            rm -rf deploy/${{ github.ref }}
+            mkdir -p deploy/${{ github.ref }}
+            cp base/*.gradle deploy/${{ github.ref }}
+          fi
 
       - name: 'Push'
         uses: stefanzweifel/git-auto-commit-action@v4
