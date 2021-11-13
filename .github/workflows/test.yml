@@ -20,7 +20,8 @@ jobs:
       - name: 'Copy Files'
         shell: bash
         run: |
-          if [[ "${{ github.ref }}" != "" ]]; then
+          BRANCH=$(echo ${GITHUB_REF#refs/heads/})
+          if [[ "${BRANCH}" != "" && "${BRANCH}" != *"/"* ]]; then
             rm -rf deploy/${{ github.ref }}
             mkdir -p deploy/${{ github.ref }}
             cp base/*.gradle deploy/${{ github.ref }}
@@ -32,3 +33,5 @@ jobs:
           commit_user_name: github-actions[bot]
           commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
           commit_message: Deploy
+          repository: deploy
+          branch: 'gh-pages'
