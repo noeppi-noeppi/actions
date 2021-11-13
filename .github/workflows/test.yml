@@ -1,0 +1,31 @@
+name: 'Deploy'
+on: push
+
+jobs:
+  deploy:
+    if: startsWith(github.repository, 'noeppi-noeppi/') # don't run this in forks
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout Base Branch'
+        uses: actions/checkout@v2
+        with:
+          path: base
+
+      - name: 'Checkout Deploy Branch'
+        uses: actions/checkout@v2
+        with:
+          ref: 'gh-pages'
+          path: deploy
+
+      - name: 'Copy Files'
+        run: |
+          rm -rf deploy/${{ github.head_ref }}
+          mkdir -p deploy/${{ github.head_ref }}
+          cp base/*.gradle deploy/${{ github.head_ref }}
+
+      - name: 'Push'
+        uses: stefanzweifel/git-auto-commit-action@v4
+        with:
+          commit_user_name: github-actions[bot]
+          commit_user_email: 41898282+github-actions[bot]@users.noreply.github.com
+          commit_message: Deploy
